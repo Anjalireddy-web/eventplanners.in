@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elite Royal – ER Event Managements | Making Every Moment Royal</title>
+  <meta name="description" content="ER Event Managements provides complete event planning for weddings, corporate events, birthdays, baby showers, and more. We make every moment royal.">
+
+  <style>
+    /* ===== GLOBAL STYLES ===== */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:"Poppins", sans-serif; scroll-behavior:smooth; }
+    body { background:#fff; color:#222; position:relative; overflow-x:hidden; transition: background 0.3s, color 0.3s;}
+    body::before {
+      content:"ER EVENTS"; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-30deg);
+      font-size:12rem; font-weight:800; color:rgba(240,240,240,0.5); z-index:-1; letter-spacing:15px;
+      user-select:none; pointer-events:none; white-space:nowrap;
+    }
+    a { text-decoration:none; color:inherit; }
+    .container { width:90%; max-width:1200px; margin:auto; }
+    h1,h2,h3,h4 { color:#333; }
+    p { color:#555; line-height:1.6; }
+    img { display:block; width:100%; height:auto; }
+    /* ===== HEADER / HERO ===== */
+    header { position:sticky; top:0; background:#fff; z-index:1000; padding:15px 0; box-shadow:0 2px 5px rgba(0,0,0,0.1); transition:background 0.3s; }
+    header.sticky { background:#8b008b; color:white; }
+    header nav { display:flex; justify-content:center; gap:20px; }
+    header nav a { color:#8b008b; font-weight:600; transition:0.3s; }
+    header.sticky nav a { color:white; }
+    header nav a:hover { color:#b300b3; }
+    .hero { background: linear-gradient(to bottom right, rgba(0,0,0,0.6), rgba(80,0,80,0.6)), url('images/hero-bg.jpg') center/cover no-repeat; color:white; text-align:center; padding:160px 20px; transition: padding 0.3s; }
+    .hero h1 { font-size:3.5rem; font-weight:700; margin-bottom:10px; text-shadow:2px 2px 10px rgba(0,0,0,0.4); }
+    .hero p { font-size:1.3rem; margin-bottom:30px; }
+    .btn-primary { background:#8b008b; color:white; padding:12px 28px; border-radius:30px; font-weight:600; transition:0.3s; }
+    .btn-primary:hover { background:#b300b3; transform:scale(1.05); }
+
+    /* ===== SECTION HEAD ===== */
+    .section-head { text-align:center; margin-bottom:50px; opacity:0; transform:translateY(20px); transition: all 0.8s ease; }
+    .section-head.visible { opacity:1; transform:translateY(0); }
+    .section-head h2 { font-size:2.3rem; color:#8b008b; margin-bottom:10px; text-transform:uppercase; }
+
+    /* ===== ABOUT ===== */
+    .about { padding:100px 20px; background:#faf5ff; }
+
+    /* ===== SERVICES ===== */
+    .services { padding:100px 20px; }
+    .grid-services { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; }
+    .service-card { background:white; border-radius:15px; box-shadow:0 5px 20px rgba(0,0,0,0.1); overflow:hidden; text-align:center; transition:transform 0.3s, box-shadow 0.3s; }
+    .service-card:hover { transform:translateY(-8px); box-shadow:0 8px 25px rgba(0,0,0,0.15); }
+    .service-card img { width:100%; height:200px; object-fit:cover; }
+    .service-card h4 { margin-top:15px; font-size:1.3rem; color:#8b008b; }
+    .service-card p { padding:10px 20px 20px; }
+
+    /* ===== PORTFOLIO ===== */
+    .portfolio { background:#fdf9ff; padding:100px 20px; }
+    .grid-portfolio { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; }
+    .portfolio-card { position:relative; border-radius:15px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+    .portfolio-card img { width:100%; height:250px; object-fit:cover; transition: transform 0.4s ease; }
+    .portfolio-card:hover img { transform:scale(1.1); }
+    .portfolio-info { position:absolute; bottom:0; width:100%; padding:15px; background:rgba(0,0,0,0.6); color:white; text-align:left; }
+    .portfolio-info h4 { margin-bottom:5px; }
+
+    /* ===== GALLERY ===== */
+    .gallery { padding:100px 20px; background:#faf5ff; }
+    .gallery-filters { display:flex; justify-content:center; gap:15px; margin-bottom:30px; flex-wrap:wrap; }
+    .gallery-filters button { padding:8px 18px; border:none; border-radius:20px; cursor:pointer; background:#8b008b; color:white; transition:0.3s; }
+    .gallery-filters button.active, .gallery-filters button:hover { background:#b300b3; }
+    .grid-gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; }
+    .gallery-img { border-radius:10px; cursor:pointer; opacity:0; transform:translateY(20px); transition: all 0.5s ease; }
+    .gallery-img.visible { opacity:1; transform:translateY(0); }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox { display:none; position:fixed; z-index:999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.95); justify-content:center; align-items:center; flex-direction:column; overflow:hidden; opacity:0; transition:opacity 0.4s ease; }
+    .lightbox.show { display:flex; opacity:1; }
+    .lightbox img { max-width:90%; max-height:70%; border-radius:10px; transform:scale(0.7); opacity:0; transition: transform 0.4s ease, opacity 0.4s ease; }
+    .lightbox.show img { transform:scale(1); opacity:1; }
+    .lightbox .caption { color:white; text-align:center; margin:10px 0; font-size:1.2rem; opacity:0; transition: opacity 0.4s ease 0.2s; }
+    .lightbox.show .caption { opacity:1; }
+    .lightbox .close { position:absolute; top:20px; right:35px; color:white; font-size:40px; cursor:pointer; font-weight:bold; }
+    .lightbox .prev, .lightbox .next { position:absolute; top:50%; color:white; font-size:50px; padding:10px; cursor:pointer; user-select:none; border-radius:50%; background:rgba(0,0,0,0.3); transform:translateY(-50%); transition:background 0.3s; }
+    .lightbox .prev:hover, .lightbox .next:hover { background:rgba(0,0,0,0.6); }
+    .lightbox .prev { left:20px; } .lightbox .next { right:20px; }
+    .lightbox-thumbnails { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin-top:15px; max-width:90%; overflow-x:auto; }
+    .lightbox-thumbnails img { width:60px; height:40px; object-fit:cover; cursor:pointer; border-radius:5px; opacity:0.6; transition:0.3s; }
+    .lightbox-thumbnails img.active, .lightbox-thumbnails img:hover { opacity:1; border:2px solid #8b008b; }
+
+    /* ===== CONTACT ===== */
+    .contact { padding:100px 20px; text-align:center; }
+    .contact-details p { font-size:1.1rem; margin:8px 0; }
+    .contact a { margin-top:20px; display:inline-block; }
+    .contact form { max-width:500px; margin:auto; display:flex; flex-direction:column; gap:15px; }
+    .contact input, .contact textarea { padding:10px; border-radius:8px; border:1px solid #ccc; width:100%; font-size:1rem; }
+    .contact button { background:#8b008b; color:white; padding:12px; border:none; border-radius:25px; cursor:pointer; font-weight:600; transition:0.3s; }
+    .contact button:hover { background:#b300b3; }
+
+    /* ===== BACK TO TOP ===== */
+    #backToTop { position:fixed; bottom:30px; right:30px; padding:12px 18px; background:#8b008b; color:white; border:none; border-radius:50px; cursor:pointer; font-size:18px; display:none; z-index:1000; transition:0.3s; }
+    #backToTop:hover { background:#b300b3; }
+
+    /* ===== FOOTER ===== */
+    .footer { background:#8b008b; color:white; text-align:center; padding:25px 10px; font-size:0.9rem; }
+
+    /* ===== DARK MODE ===== */
+    body.dark-mode { background:#111; color:#eee; }
+    body.dark-mode header.sticky { background:#222; }
+    body.dark-mode .section-head h2 { color:#b300b3; }
+    body.dark-mode .btn-primary, body.dark-mode .contact button, body.dark-mode .gallery-filters button { background:#b300b3; }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px){ .hero h1 { font-size:2.5rem; } .hero p{font-size:1.1rem;} }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="header">
+    <nav>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+      <button id="modeToggle" style="border:none;background:none;color:#8b008b;font-weight:600;cursor:pointer;">🌙</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Elite Royal – ER Event Managements</h1>
+      <p>Making Every Moment Royal ✨</p>
+      <a href="#services" class="btn-primary">Explore Our Services</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="container section-head">
+      <h2>About Us</h2>
+      <p>At <strong>ER Event Managements</strong>, we handle complete event planning from start to finish — including venue booking, décor, weddings & engagements, corporate parties, birthdays, haldi ceremonies, baby showers, and more. We ensure every event runs flawlessly with custom themes and personalized touches.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="services">
+    <div class="container section-head">
+      <h2>Our Services</h2>
+      <p>We offer end-to-end event solutions tailored to your vision and style.</p>
+    </div>
+    <div class="container grid-services">
+      <div class="service-card">
+        <img src="images/wedding.jpg" alt="Wedding decoration" />
+        <h4>Weddings & Engagements</h4>
+        <p>Elegant décor and perfect coordination to make your big day truly royal.</p>
+      </div>
+      <div class="service-card">
+        <img src="images/corporate.jpg" alt="Corporate event" />
+        <h4>Corporate Events</h4>
+        <p>From conferences to gala dinners, we create impactful and professional experiences.</p>
+      </div>
+      <div class="service-card">
+        <img src="images/birthday.jpg" alt="Birthday event" />
+        <h4>Birthday Parties</h4>
+        <p>Creative themes, décor, and entertainment for kids and adults alike.</p>
+      </div>
+      <div class="service-card">
+        <img src="images/babyshower.jpg" alt="Baby shower" />
+        <h4>Baby Showers & Haldi</h4>
+        <p>Soft, elegant setups with pastel themes, floral elements, and joyful vibes.</p>
+      </div>
+      <div class="service-card">
+        <img src="images/theme.jpg" alt="Theme decoration" />
+        <h4>Theme Décor</h4>
+        <p>Unique personalized themes that reflect your personality and event purpose.</p>
+      </div>
+      <div class="service-card">
+        <img src="images/invitation.jpg" alt="Invitation design" />
+        <h4>Invitations & Guest Management</h4>
+        <p>Stylish invites and smooth guest experience management for a stress-free celebration.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio" class="portfolio">
+    <div class="container section-head">
+      <h2>Our Work</h2>
+      <p>Some glimpses from the events we’ve designed and managed with love.</p>
+    </div>
+    <div class="container grid-portfolio">
+      <div class="portfolio-card">
+        <img src="images/decor1.jpg" alt="Stage decoration" />
+        <div class="portfolio-info">
+          <h4>Elegant Stage Décor</h4>
+          <span>Wedding Event</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <img src="images/decor2.jpg" alt="Luxury night garden wedding setup" />
+        <div class="portfolio-info">
+          <h4>Luxury Garden Wedding</h4>
+          <span>Outdoor Event</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <img src="images/decor3.jpg" alt="Birthday balloon decoration" />
+        <div class="portfolio-info">
+          <h4>Kids’ Birthday Celebration</h4>
+          <span>Theme Party</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <img src="images/haldi.jpg" alt="Haldi event" />
+        <div class="portfolio-info">
+          <h4>Haldi Ceremony Décor</h4>
+          <span>Traditional Event</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="gallery">
+    <div class="container section-head">
+      <h2>Gallery</h2>
+      <p>Click on any image to view it in full size. Filter by event type or navigate using arrows, thumbnails, or keyboard.</p>
+      <div class="gallery-filters">
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="wedding">Weddings</button>
+        <button data-filter="corporate">Corporate</button>
+        <button data-filter="birthday">Birthday</button>
+        <button data-filter="baby">Baby Showers/Haldi</button>
+      </div>
+    </div>
+    <div class="container grid-gallery">
+      <img src="images/wedding.jpg" alt="Weddings & Engagements" class="gallery-img" data-caption="Weddings & Engagements" data-category="wedding" loading="lazy"/>
+      <img src="images/corporate.jpg" alt="Corporate Events" class="gallery-img" data-caption="Corporate Events" data-category="corporate" loading="lazy"/>
+      <img src="images/birthday.jpg" alt="Birthday Parties" class="gallery-img" data-caption="Birthday Parties" data-category="birthday" loading="lazy"/>
+      <img src="images/babyshower.jpg" alt="Baby Showers & Haldi" class="gallery-img" data-caption="Baby Showers & Haldi" data-category="baby" loading="lazy"/>
+      <img src="images/theme.jpg" alt="Theme Decor" class="gallery-img" data-caption="Theme Décor" data-category="wedding" loading="lazy"/>
+      <img src="images/invitation.jpg" alt="Invitations & Guest Management" class="gallery-img" data-caption="Invitations & Guest Management" data-category="corporate" loading="lazy"/>
+      <img src="images/decor1.jpg" alt="Stage Decoration" class="gallery-img" data-caption="Elegant Stage Décor" data-category="wedding" loading="lazy"/>
+      <img src="images/decor2.jpg" alt="Luxury Garden Wedding" class="gallery-img" data-caption="Luxury Garden Wedding" data-category="wedding" loading="lazy"/>
+      <img src="images/decor3.jpg" alt="Kids Birthday" class="gallery-img" data-caption="Kids’ Birthday Celebration" data-category="birthday" loading="lazy"/>
+      <img src="images/haldi.jpg" alt="Haldi Ceremony" class="gallery-img" data-caption="Haldi Ceremony Décor" data-category="baby" loading="lazy"/>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+      <span class="close">&times;</span>
+      <span class="prev">&#10094;</span>
+      <img src="" alt="">
+      <span class="next">&#10095;</span>
+      <div class="caption"></div>
+      <div class="lightbox-thumbnails" id="lightbox-thumbnails"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="container section-head">
+      <h2>Contact Us</h2>
+      <p>Let’s create your next memorable celebration with <strong>ER Event Managements</strong>.</p>
+    </div>
+    <div class="container contact-details">
+      <p><strong>Email:</strong> ereventmanagements@outlook.com</p>
+      <p><strong>Phone:</strong> +91 87540 90851</p>
+      <p><strong>Address:</strong> ER Event Managements, 1-301, near NTR Statue, Nandamuri Nagar, Bowenpally, Telangana 500011, Hyderabad, India</p>
+      <a href="https://wa.me/8754090851" class="btn-primary">Book Your Event on WhatsApp</a>
+
+      <form id="contactForm">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+
+      <div style="margin-top:30px;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18..." width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACK TO TOP -->
+  <button id="backToTop">&#8679;</button>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2023 Elite Royal – ER Event Managements. Making Every Moment Royal.</p>
+  </footer>
+
+  <!-- ===== SCRIPT ===== -->
+  <script>
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 50) header.classList.add('sticky');
+      else header.classList.remove('sticky');
+      document.getElementById('backToTop').style.display = (window.scrollY > 300) ? 'block':'none';
+    });
+
+    const sections = document.querySelectorAll('.section-head, .service-card, .gallery-img, .portfolio-card');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, {threshold:0.1});
+    sections.forEach(s=>observer.observe(s));
+
+    document.getElementById('backToTop').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+    const modeToggle = document.getElementById('modeToggle');
+    modeToggle.addEventListener('click',()=>{
+      document.body.classList.toggle('dark-mode');
+      modeToggle.textContent = document.body.classList.contains('dark-mode')?'☀️':'🌙';
+    });
+
+    const galleryBtns = document.querySelectorAll('.gallery-filters button');
+    const galleryImgs = document.querySelectorAll('.gallery-img');
+    galleryBtns.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        galleryBtns.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        galleryImgs.forEach(img=>{ img.style.display=(filter==='all'||img.dataset.category===filter)?'block':'none'; });
+      });
+    });
+
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = lightbox.querySelector('img');
+    const caption = lightbox.querySelector('.caption');
+    const lbClose = lightbox.querySelector('.close');
+    const lbPrev = lightbox.querySelector('.prev');
+    const lbNext = lightbox.querySelector('.next');
+    const lbThumbs = document.getElementById('lightbox-thumbnails');
+    let currentIndex = 0;
+
+    function openLightbox(index){
+      const visibleImgs = Array.from(galleryImgs).filter(img=>img.style.display!=='none');
+      currentIndex = index;
+      lbImg.src = visibleImgs[currentIndex].src;
+      caption.textContent = visibleImgs[currentIndex].dataset.caption;
+      lightbox.classList.add('show');
+      renderThumbnails(visibleImgs);
+    }
+
+    function closeLightbox(){ lightbox.classList.remove('show'); }
+    function changeImage(dir){
+      const visibleImgs = Array.from(galleryImgs).filter(img=>img.style.display!=='none');
+      currentIndex = (currentIndex + dir + visibleImgs.length) % visibleImgs.length;
+      lbImg.src = visibleImgs[currentIndex].src;
+      caption.textContent = visibleImgs[currentIndex].dataset.caption;
+      updateThumbnails();
+    }
+
+    function renderThumbnails(imgs){
+      lbThumbs.innerHTML='';
+      imgs.forEach((img,i)=>{
+        const thumb = document.createElement('img');
+        thumb.src = img.src; thumb.className=(i===currentIndex?'active':'');
+        thumb.addEventListener('click',()=>{ currentIndex=i; lbImg.src=img.src; caption.textContent=img.dataset.caption; updateThumbnails(); });
+        lbThumbs.appendChild(thumb);
+      });
+    }
+
+    function updateThumbnails(){
+      const thumbs = lbThumbs.querySelectorAll('img');
+      thumbs.forEach((t,i)=>t.className=(i===currentIndex?'active':''));
+    }
+
+    galleryImgs.forEach((img,i)=>img.addEventListener('click',()=>openLightbox(i)));
+    lbClose.addEventListener('click',closeLightbox);
+    lbPrev.addEventListener('click',()=>changeImage(-1));
+    lbNext.addEventListener('click',()=>changeImage(1));
+    document.addEventListener('keydown', e => {
+      if(lightbox.classList.contains('show')){
+        if(e.key==='ArrowRight') changeImage(1);
+        if(e.key==='ArrowLeft') changeImage(-1);
+        if(e.key==='Escape') closeLightbox();
+      }
+    });
+
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Thank you! Your message has been sent.');
+      form.reset();
+    });
+  </script>
+</body>
+</html>
